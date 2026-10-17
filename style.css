@@ -1,53 +1,1515 @@
-/* Убираем отступы и белые края */
+/* ==========================================
+   NIGHTLINE — ANALOG HORROR INTERFACE
+   ========================================== */
 
 * {
     box-sizing: border-box;
-}
-
-html {
-    width: 100%;
-    height: 100%;
     margin: 0;
     padding: 0;
-    background: #000;
 }
 
+html,
 body {
     width: 100%;
     height: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-
-    margin: 0;
-    padding: 0;
-
     overflow: hidden;
-    background: #000;
+    background: #030405;
 }
 
-.startMenu_style {
-    position: relative;
+body {
+    font-family: "Courier New", monospace;
+    color: #c2cbd5;
+    user-select: none;
+    -webkit-user-select: none;
+}
 
+.hidden {
+    display: none !important;
+}
+
+button {
+    font-family: inherit;
+    color: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================
+   ГЛАВНОЕ МЕНЮ
+   ========================================== */
+
+.startMenu_style,
+.officeRoom_style,
+.cameraSystem_style {
+    position: fixed;
+    inset: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     height: 100dvh;
-
-    margin: 0;
-    padding: 0;
-
     overflow: hidden;
-    background: #000;
+    background: #030405;
+}
+
+/* ==========================================
+   ЭКРАН ГЛАВНОГО МЕНЮ
+   ========================================== */
+
+.startMenu_style {
+    z-index: 10;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 0 0 9vh 5vw;
+    isolation: isolate;
 }
 
 .startMenuImage_style {
     position: absolute;
     inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    pointer-events: none;
+}
 
-    display: block;
+.startMenu_style::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.12) 0%,
+        rgba(0, 0, 0, 0.02) 38%,
+        rgba(0, 0, 0, 0.28) 65%,
+        rgba(0, 0, 0, 0.82) 100%
+    );
+    pointer-events: none;
+}
+
+.startMenuButton_style {
+    position: relative;
+    width: min(28vw, 360px);
+    min-width: 0;
+    min-height: 0;
+    padding: 1.1em 1em;
+
+    background: rgba(3, 5, 7, 0.78);
+    border: 1px solid rgba(166, 184, 202, 0.65);
+    border-radius: 0;
+
+    color: #c5ccd4;
+    font-size: clamp(10px, 1.1vw, 16px);
+    font-weight: normal;
+    letter-spacing: clamp(1px, 0.25vw, 4px);
+    text-align: center;
+
+    text-shadow: 0 0 8px rgba(175, 195, 220, 0.2);
+
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.8),
+        inset 0 0 20px rgba(0, 0, 0, 0.55),
+        0 8px 30px rgba(0, 0, 0, 0.5);
+
+    transition:
+        background 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.startMenuButton_style:hover {
+    background: rgba(13, 17, 21, 0.92);
+    border-color: rgba(205, 216, 229, 0.9);
+    color: #f0f3f6;
+
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.9),
+        inset 0 0 18px rgba(110, 135, 160, 0.07),
+        0 0 18px rgba(150, 175, 200, 0.08);
+}
+
+.startMenuButton_style:active {
+    background: rgba(0, 0, 0, 0.96);
+    color: #89939f;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+}
+
+.startMenuButton_style:focus-visible {
+    outline: 1px solid #aebdcd;
+    outline-offset: 4px;
+}
+
+/* ==========================================
+   КОМНАТА ОХРАННИКА
+   ========================================== */
+
+.officeRoom_style {
+    z-index: 1;
+    display: none;
+    isolation: isolate;
+}
+
+.officeImage_style {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
 
     width: 100%;
     height: 100%;
 
     object-fit: cover;
     object-position: center;
+    pointer-events: none;
+}
+
+.officeRoom_style::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background: radial-gradient(
+        ellipse at center,
+        rgba(20, 19, 17, 0.02) 35%,
+        rgba(0, 0, 0, 0.08) 75%,
+        rgba(0, 0, 0, 0.22) 100%
+    );
+
+    pointer-events: none;
+}
+
+/* ==========================================
+   ВЕРХНЯЯ ПАНЕЛЬ ОФИСА
+   ========================================== */
+
+ .upperPart_style {
+    position: absolute;
+    top: 1.8%;
+    left: 1.3%;
+    width: 97.4%;
+    height: 8.1%;
+
+    display: grid;
+    /* Название | четыре кнопки по центру | ночь и время */
+    grid-template-columns: minmax(0, 1fr) minmax(8px, 1fr) auto auto minmax(8px, 1fr) minmax(0, 1fr);
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    column-gap: clamp(5px, 0.8vw, 14px);
+
+    padding: 0.5em 1.5%;
+
+    background: linear-gradient(
+        180deg,
+        rgba(15, 19, 23, 0.94),
+        rgba(2, 4, 6, 0.91)
+    );
+
+    border: 1px solid rgba(137, 159, 183, 0.58);
+
+    box-shadow:
+        inset 0 1px 0 rgba(205, 219, 233, 0.08),
+        inset 0 -5px 12px rgba(0, 0, 0, 0.55),
+        0 3px 15px rgba(0, 0, 0, 0.55);
+
+    z-index: 2;
+}
+
+.gameName_style {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    justify-self: start;
+    align-self: center;
+
+    color: #b7c3d2;
+    font-size: clamp(13px, 2.4vw, 34px);
+    font-weight: normal;
+    letter-spacing: clamp(1px, 0.22vw, 3px);
+
+    text-shadow:
+        0 0 5px rgba(164, 190, 218, 0.18),
+        1px 0 rgba(190, 205, 220, 0.05);
+}
+
+/* Две кнопки управления единственной дверью */
+.door_style {
+    grid-row: 1 / 3;
+    align-self: center;
+    justify-self: center;
+    min-width: clamp(72px, 7vw, 108px);
+    min-height: clamp(36px, 3.6vw, 50px);
+    padding: 0.7em 1em;
+    background: linear-gradient(180deg, rgba(21, 27, 33, 0.98), rgba(4, 6, 8, 0.99));
+    border: 1px solid rgba(125, 148, 171, 0.65);
+    border-radius: 0;
+    color: #bdc9d8;
+    font-family: inherit;
+    font-size: clamp(11px, 1.15vw, 17px);
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+#lightInLeftDoor { grid-column: 3; }
+#openLeftDoor {
+    grid-column: 4;
+    position: relative;
+}
+
+#openLeftDoor::after {
+    content: "";
+    position: absolute;
+    top: 12%;
+    right: calc(-1 * clamp(10px, 1.3vw, 21px));
+    height: 76%;
+    width: 1px;
+    background: rgba(137, 159, 183, 0.8);
+    box-shadow: 0 0 5px rgba(137, 159, 183, 0.2);
+    pointer-events: none;
+}
+
+.door_style:hover {
+    background: linear-gradient(180deg, rgba(36, 46, 56, 0.98), rgba(8, 12, 16, 0.99));
+    border-color: rgba(194, 213, 232, 0.9);
+    color: #edf3f8;
+}
+
+.door_style:active {
+    background: #030405;
+    color: #788a9d;
+}
+
+/* ==========================================
+   НИЖНЯЯ ПАНЕЛЬ ОФИСА
+   ========================================== */
+
+.lowerPart_style {
+    position: absolute;
+    left: 1.3%;
+    bottom: 1.8%;
+    width: 97.4%;
+    height: 10.7%;
+
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 2fr)
+        minmax(0, 1fr);
+
+    grid-template-rows: 1fr;
+    align-items: center;
+    column-gap: 1.5%;
+
+    padding: 0.7% 1.5%;
+
+    background: linear-gradient(
+        180deg,
+        rgba(13, 17, 21, 0.93),
+        rgba(1, 2, 3, 0.97)
+    );
+
+    border: 1px solid rgba(137, 159, 183, 0.62);
+
+    box-shadow:
+        inset 0 1px 0 rgba(210, 224, 239, 0.07),
+        inset 0 5px 18px rgba(0, 0, 0, 0.35),
+        0 -5px 20px rgba(0, 0, 0, 0.42);
+
+    z-index: 2;
+}
+
+.batteryPower_style {
+    grid-column: 1;
+    grid-row: 1;
+
+    justify-self: start;
+    align-self: center;
+
+    width: 100%;
+    min-width: 0;
+
+    color: #b7c3d2;
+    font-size: clamp(9px, 1.15vw, 17px);
+    letter-spacing: clamp(0px, 0.08vw, 1px);
+    white-space: nowrap;
+
+    text-shadow: 0 0 6px rgba(163, 190, 217, 0.15);
+    transform: translateY(-0.9em);
+}
+
+.batteryPowerProgressBar_style {
+    grid-column: 1;
+    grid-row: 1;
+
+    justify-self: start;
+    align-self: center;
+
+    position: relative;
+    width: 85%;
+    height: clamp(7px, 1.1vw, 14px);
+    min-width: 0;
+
+    transform: translateY(0.9em);
+    overflow: hidden;
+
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(137, 159, 183, 0.65);
+
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(0, 0, 0, 0.65);
+}
+
+.batteryPowerProgressBar_style::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    left: 1px;
+    width: calc(50% - 2px);
+
+    background: linear-gradient(
+        90deg,
+        #287d42,
+        #52b96a
+    );
+
+    box-shadow:
+        0 0 5px rgba(65, 190, 95, 0.2),
+        inset 0 1px 0 rgba(190, 255, 195, 0.18);
+}
+
+.openCamera_style {
+    grid-column: 2;
+    grid-row: 1;
+
+    justify-self: center;
+    align-self: center;
+
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    min-height: 0;
+    padding: 0.8em 0.5em;
+
+    background: linear-gradient(
+        180deg,
+        rgba(17, 21, 26, 0.96),
+        rgba(2, 4, 6, 0.98)
+    );
+
+    border: 1px solid rgba(164, 188, 214, 0.78);
+    border-radius: 0;
+
+    color: #bdc9d8;
+    font-size: clamp(9px, 1.15vw, 17px);
+    font-weight: normal;
+    letter-spacing: clamp(0px, 0.1vw, 1.5px);
+    text-align: center;
+    overflow-wrap: anywhere;
+
+    text-shadow: 0 0 7px rgba(160, 185, 215, 0.13);
+
+    box-shadow:
+        inset 0 1px 0 rgba(220, 230, 240, 0.08),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.55),
+        0 3px 8px rgba(0, 0, 0, 0.35);
+
+    transition:
+        background 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.openCamera_style:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(27, 34, 42, 0.98),
+        rgba(6, 9, 12, 0.99)
+    );
+
+    border-color: rgba(200, 216, 232, 0.95);
+    color: #edf2f7;
+
+    box-shadow:
+        inset 0 1px 0 rgba(225, 235, 245, 0.12),
+        inset 0 0 15px rgba(100, 130, 160, 0.06),
+        0 0 12px rgba(145, 175, 205, 0.11);
+}
+
+.openCamera_style:active {
+    background: linear-gradient(
+        180deg,
+        rgba(2, 3, 4, 0.99),
+        rgba(0, 0, 0, 1)
+    );
+
+    color: #8998a8;
+    box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.9);
+}
+
+.openCamera_style:focus-visible {
+    outline: 1px solid #bdcbd9;
+    outline-offset: 2px;
+}
+
+/* ==========================================
+   СИСТЕМА ВИДЕОНАБЛЮДЕНИЯ
+   ========================================== */
+
+.cameraSystem_style {
+    z-index: 20;
+    display: none;
+    grid-template-columns: minmax(0, 1fr);
+
+    /*
+       Верхняя панель.
+       Центральная область.
+       Нижняя кнопка выхода.
+    */
+    grid-template-rows: 9% minmax(0, 1fr) 7%;
+    gap: 1.2%;
+
+    padding: 1.3%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(15, 19, 22, 0.98),
+            rgba(2, 3, 4, 1)
+        );
+
+    isolation: isolate;
+}
+
+/* Тонкая тёмная виньетка */
+
+.cameraSystem_style::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background: radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(0, 0, 0, 0.28) 100%
+    );
+
+    pointer-events: none;
+}
+
+/* ==========================================
+   ВЕРХНЯЯ ПАНЕЛЬ КАМЕР
+   ========================================== */
+
+.cameraHeader_style {
+    grid-row: 1;
+
+    display: grid;
+
+    grid-template-columns:
+        auto
+        auto
+        minmax(0, 1fr)
+        auto;
+
+    align-items: center;
+    column-gap: 3%;
+
+    min-width: 0;
+    padding: 0.5em 2%;
+
+    background: linear-gradient(
+        180deg,
+        rgba(20, 25, 30, 0.98),
+        rgba(4, 6, 8, 0.98)
+    );
+
+    border: 1px solid rgba(137, 159, 183, 0.58);
+
+    box-shadow:
+        inset 0 1px 0 rgba(205, 219, 233, 0.08),
+        inset 0 -5px 12px rgba(0, 0, 0, 0.55),
+        0 3px 15px rgba(0, 0, 0, 0.45);
+}
+
+/* Время */
+
+.timeInCamera_style {
+    grid-column: 1;
+    justify-self: start;
+
+    color: #c1ccd8;
+    font-size: clamp(11px, 1.4vw, 20px);
+    white-space: nowrap;
+    letter-spacing: 1px;
+
+    text-shadow: 0 0 6px rgba(170, 195, 220, 0.12);
+}
+
+/* Номер ночи */
+
+.nightNumberInCamera_style {
+    grid-column: 2;
+    justify-self: start;
+
+    color: #c1ccd8;
+    font-size: clamp(11px, 1.4vw, 20px);
+    white-space: nowrap;
+    letter-spacing: 1px;
+
+    text-shadow: 0 0 6px rgba(170, 195, 220, 0.12);
+}
+
+/* Заряд батареи */
+
+.batteryPowerInCamera_style {
+    grid-column: 3;
+    justify-self: center;
+
+    color: #aab8c7;
+    font-size: clamp(10px, 1.2vw, 17px);
+    letter-spacing: 1px;
+    white-space: nowrap;
+
+    text-shadow: 0 0 5px rgba(163, 190, 217, 0.12);
+}
+
+/* ==========================================
+   ИНДИКАТОР REC
+   ========================================== */
+
+.cameraRecording_style {
+    grid-column: 4;
+    justify-self: end;
+
+    display: flex;
+    align-items: center;
+    gap: 0.55em;
+
+    color: #b8c0c9;
+    font-size: clamp(11px, 1.35vw, 19px);
+    letter-spacing: 2px;
+    white-space: nowrap;
+
+    text-shadow: 0 0 5px rgba(200, 210, 220, 0.12);
+}
+
+/* Красная точка */
+
+.recordingDot_style {
+    display: inline-block;
+    flex: 0 0 auto;
+
+    width: clamp(6px, 0.7vw, 10px);
+    height: clamp(6px, 0.7vw, 10px);
+
+    background: #e21d24;
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 5px rgba(255, 25, 35, 0.65),
+        0 0 12px rgba(255, 25, 35, 0.25);
+
+    animation: recordingBlink 1.5s infinite;
+}
+
+@keyframes recordingBlink {
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow:
+            0 0 5px rgba(255, 25, 35, 0.65),
+            0 0 12px rgba(255, 25, 35, 0.25);
+    }
+
+    50% {
+        opacity: 0.35;
+        box-shadow: 0 0 2px rgba(255, 25, 35, 0.25);
+    }
+}
+
+/* ==========================================
+   ОСНОВНАЯ ОБЛАСТЬ КАМЕР
+   ========================================== */
+
+.cameraView_style {
+    position: relative;
+
+    grid-row: 2;
+    grid-column: 1;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+    border: 1px solid #3e4856;
+    background: #050608;
+}
+
+.cameraImage_style {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+
+    border: none;
+}
+
+/* Лёгкий эффект сканирования */
+
+.cameraView_style::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.09) 0,
+            rgba(0, 0, 0, 0.09) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    opacity: 0.28;
+    pointer-events: none;
+}
+
+/* ==========================================
+   СХЕМА ЗДАНИЯ — КАМЕРЫ И СЛЕПАЯ ЗОНА
+   CAM_07 нарисована как блок, но кнопки у неё нет.
+   ========================================== */
+
+.cameraSidebar_style {
+    position: absolute;
+    top: 10.5%;
+    right: 1.3%;
+    bottom: 9%;
+    width: 32%;
+    min-width: 260px;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid #3e4856;
+    background: linear-gradient(180deg, rgba(10, 13, 18, 0.97), rgba(3, 5, 8, 0.98));
+    z-index: 10;
+}
+
+/* Соединительные линии и стрелки находятся позади блоков. */
+.cameraSidebar_style .cameras_style {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 27%;
+    height: 11.5%;
+    min-height: 30px;
+    padding: 0.25em;
+    white-space: nowrap;
+    font-size: clamp(8px, 0.85vw, 13px);
+}
+
+#cam_scene {
+    top: 2%; left: 28%; width: 44%; height: 13%;
+}
+#cam_01 { top: 24%; left: 2%; }
+#cam_02 { top: 24%; right: 2%; }
+#cam_03 { top: 41%; left: 2%; }
+#cam_04 { top: 41%; right: 2%; }
+#cam_05 { top: 58%; left: 2%; }
+#cam_06 { top: 58%; right: 2%; }
+
+/* CAM_07 — слепая зона: визуальный блок, а не кнопка. */
+.cameraSidebar_style::after {
+    content: "CAM_07";
+    position: absolute;
+    z-index: 2;
+    top: 58%;
+    left: 35%;
+    width: 30%;
+    height: 11.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid rgba(125, 148, 171, 0.65);
+    background: linear-gradient(180deg, rgba(21, 27, 33, 0.98), rgba(4, 6, 8, 0.99));
+    color: #aebdcd;
+    font-size: clamp(8px, 0.85vw, 13px);
+    text-align: center;
+}
+
+/* Офис — нижний центральный блок схемы. */
+.cameraSidebar_style::before {
+    content: "ОФИС";
+    position: absolute;
+    z-index: 2;
+    left: 32%;
+    bottom: 2%;
+    width: 36%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid rgba(125, 148, 171, 0.65);
+    background: linear-gradient(180deg, rgba(21, 27, 33, 0.98), rgba(4, 6, 8, 0.99));
+    color: #aebdcd;
+    font-size: clamp(9px, 0.9vw, 14px);
+}
+
+/* SVG-схема: соединительные линии без треугольных наконечников. */
+.cameraSidebar_style {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%237d8b9b' stroke-width='3'%3E%3Cpath d='M500 145 C360 145 175 145 150 240'/%3E%3Cpath d='M500 145 C640 145 825 145 850 240'/%3E%3Cpath d='M150 355 V410 M150 525 V580 M850 355 V410 M850 525 V580'/%3E%3Cpath d='M285 637 H350 M715 637 H650 M500 695 V830'/%3E%3C/g%3E%3C/svg%3E"),
+      linear-gradient(180deg, rgba(10, 13, 18, 0.97), rgba(3, 5, 8, 0.98));
+    background-size: 100% 100%, 100% 100%;
+    background-repeat: no-repeat;
+}
+
+/* ==========================================
+   КНОПКИ ВЫБОРА КАМЕР
+   ========================================== */
+
+.cameras_style {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 0.8em 0.2em;
+
+    background: linear-gradient(
+        180deg,
+        rgba(21, 27, 33, 0.98),
+        rgba(4, 6, 8, 0.99)
+    );
+
+    border: 1px solid rgba(125, 148, 171, 0.65);
+    border-radius: 0;
+
+    color: #aebdcd;
+
+    font-size: clamp(9px, 1.05vw, 15px);
+    font-weight: normal;
+    letter-spacing: clamp(0px, 0.08vw, 1px);
+    text-align: center;
+    white-space: nowrap;
+
+    text-shadow: 0 0 5px rgba(160, 185, 215, 0.12);
+
+    box-shadow:
+        inset 0 1px 0 rgba(220, 230, 240, 0.05),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.6),
+        0 2px 5px rgba(0, 0, 0, 0.35);
+
+    transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.cameras_style:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(36, 46, 56, 0.98),
+        rgba(8, 12, 16, 0.99)
+    );
+
+    border-color: rgba(194, 213, 232, 0.9);
+    color: #edf3f8;
+
+    box-shadow:
+        inset 0 1px 0 rgba(225, 235, 245, 0.1),
+        0 0 10px rgba(145, 175, 205, 0.1);
+}
+
+.cameras_style:active {
+    background: #030405;
+    color: #788a9d;
+
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.cameras_style:focus-visible {
+    outline: 1px solid #bdcbd9;
+    outline-offset: 2px;
+}
+
+/* ==========================================
+   КНОПКА ВОЗВРАТА В ОФИС
+   ========================================== */
+
+.exitButton_style {
+    position: absolute;
+
+    left: 1.3%;
+    bottom: 1.3%;
+
+    width: 73%;
+    height: 6%;
+    min-height: 40px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 25;
+
+    background: linear-gradient(
+        180deg,
+        rgba(25, 30, 38, 0.95),
+        rgba(5, 7, 11, 0.98)
+    );
+
+    border: 1px solid #566171;
+    color: #c0cad8;
+
+    font-family: inherit;
+    font-size: clamp(14px, 1.1vw, 19px);
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.exitButton_style:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(45, 53, 65, 0.95),
+        rgba(12, 16, 23, 0.98)
+    );
+
+    border-color: #a0afc3;
+}
+
+.exitButton_style:active {
+    background: rgba(15, 20, 28, 0.98);
+}
+
+.exitButton_style:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(45, 53, 65, 0.95),
+        rgba(12, 16, 23, 0.98)
+    );
+
+    border-color: #a0afc3;
+}
+
+.exitButton_style:active {
+    background: rgba(15, 20, 28, 0.98);
+}
+
+/* Стрелка вниз */
+
+.exitButton_style::before {
+    content: "";
+
+    width: clamp(12px, 1.4vw, 20px);
+    height: clamp(12px, 1.4vw, 20px);
+
+    border-right: 2px solid #aebdcd;
+    border-bottom: 2px solid #aebdcd;
+
+    transform: translateY(-25%) rotate(45deg);
+
+    filter: drop-shadow(0 0 3px rgba(160, 185, 215, 0.15));
+}
+
+.exitButton_style:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(30, 38, 46, 0.98),
+        rgba(5, 8, 11, 0.99)
+    );
+
+    border-color: rgba(200, 216, 232, 0.9);
+
+    box-shadow:
+        inset 0 1px 0 rgba(225, 235, 245, 0.1),
+        0 0 12px rgba(145, 175, 205, 0.1);
+}
+
+.exitButton_style:hover::before {
+    border-color: #edf3f8;
+}
+
+.exitButton_style:active {
+    background: #020304;
+}
+
+.exitButton_style:focus-visible {
+    outline: 1px solid #bdcbd9;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   АДАПТАЦИЯ ДЛЯ УЗКИХ ЭКРАНОВ
+   ========================================== */
+
+@media (max-width: 700px) {
+
+    /* Главное меню */
+
+    .startMenu_style {
+        padding: 0 0 7vh 5vw;
+    }
+
+    .startMenuButton_style {
+        width: 45vw;
+        font-size: clamp(9px, 2.2vw, 13px);
+        letter-spacing: clamp(0.5px, 0.3vw, 2px);
+        padding: 0.9em 0.5em;
+    }
+
+    /* Верхняя панель офиса */
+
+    .upperPart_style {
+        padding: 0.4em 2%;
+        column-gap: 3px;
+        grid-template-columns: minmax(0, 1fr) minmax(8px, 1fr) auto auto minmax(8px, 1fr) minmax(0, 1fr);
+    }
+
+    .door_style {
+        min-width: 0;
+        min-height: 30px;
+        padding: 0.45em 0.65em;
+        font-size: clamp(8px, 1.6vw, 12px);
+        letter-spacing: 0;
+    }
+
+    #openLeftDoor::after { right: -7px; }
+
+    .gameName_style {
+        letter-spacing: 1px;
+    }
+
+    /* Нижняя панель офиса */
+
+    .lowerPart_style {
+        grid-template-columns:
+            minmax(0, 0.9fr)
+            minmax(0, 1.5fr)
+            minmax(0, 0.1fr);
+
+        column-gap: 2%;
+        padding: 1% 2%;
+    }
+
+    .batteryPower_style {
+        font-size: clamp(8px, 1.8vw, 12px);
+        letter-spacing: 0;
+        transform: translateY(-1em);
+    }
+
+    .batteryPowerProgressBar_style {
+        width: 90%;
+        height: clamp(6px, 1.5vw, 10px);
+        transform: translateY(0.8em);
+    }
+
+    .openCamera_style {
+        font-size: clamp(8px, 1.8vw, 12px);
+        letter-spacing: 0;
+        padding: 0.7em 0.25em;
+    }
+
+    /* Верхняя панель камер */
+
+    .cameraSystem_style {
+        grid-template-rows: 8% minmax(0, 1fr) 6%;
+        gap: 1%;
+        padding: 1%;
+    }
+
+    .cameraHeader_style {
+        column-gap: 2%;
+        padding: 0.4em 1.5%;
+    }
+
+    .timeInCamera_style,
+    .nightNumberInCamera_style {
+        font-size: clamp(8px, 1.8vw, 12px);
+        letter-spacing: 0;
+    }
+
+    .batteryPowerInCamera_style {
+        font-size: clamp(7px, 1.5vw, 11px);
+        letter-spacing: 0;
+    }
+
+    .cameraRecording_style {
+        gap: 0.35em;
+        font-size: clamp(8px, 1.7vw, 12px);
+        letter-spacing: 1px;
+    }
+
+    /* Экран камеры и схема */
+
+    .cameraView_style {
+        width: 70%;
+        justify-self: start;
+    }
+
+    .cameraSidebar_style {
+        top: 10%;
+        right: 1%;
+        bottom: 8%;
+        width: 32%;
+        min-width: 0;
+    }
+
+    .cameraSidebar_style .cameras_style {
+        min-height: 22px;
+        font-size: clamp(6px, 1.1vw, 9px);
+    }
+
+    .cameraSidebar_style::after {
+        font-size: clamp(6px, 1.1vw, 9px);
+    }
+
+    .cameraSidebar_style::before {
+        font-size: clamp(7px, 1.2vw, 10px);
+    }
+
+    .cameras_style {
+        font-size: clamp(7px, 1.6vw, 11px);
+        letter-spacing: 0;
+        padding: 0.6em 0.1em;
+    }
+
+    .exitButton_style::before {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* ==========================================
+   УМЕНЬШЕНИЕ АНИМАЦИЙ
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .startMenuButton_style,
+    .openCamera_style,
+    .cameras_style,
+    .exitButton_style {
+        transition: none;
+    }
+
+    .recordingDot_style {
+        animation: none;
+    }
+}
+/* ==========================================
+   ИСПРАВЛЕНИЯ ПО СКРИНШОТАМ
+   ========================================== */
+
+/* Схема остаётся справа; кнопка выхода располагается ПОД ней. */
+.cameraSidebar_style {
+    top: 12.5%;
+    right: 1.3%;
+    bottom: 10%;
+    width: 32%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* Схема должна использовать именно координаты блоков, а не вертикальный список. */
+.cameraSidebar_style .cameras_style {
+    position: absolute;
+    width: 27%;
+    height: 11.5%;
+    min-height: 0;
+    padding: 0.2em;
+    font-size: clamp(8px, 0.85vw, 13px);
+}
+
+#cam_scene {
+    top: 2%;
+    left: 28%;
+    width: 44%;
+    height: 13%;
+}
+#cam_01 { top: 24%; left: 2%; }
+#cam_02 { top: 24%; right: 2%; }
+#cam_03 { top: 41%; left: 2%; }
+#cam_04 { top: 41%; right: 2%; }
+#cam_05 { top: 58%; left: 2%; }
+#cam_06 { top: 58%; right: 2%; }
+
+/* CAM_07 — только обозначенная слепая зона, НЕ кнопка.
+   Если старая кнопка ещё осталась в HTML, скрываем её. */
+#cam_07 {
+    display: none !important;
+}
+
+/* Кнопка закрытия системы камер находится под схемой, справа. */
+.exitButton_style {
+    left: auto;
+    right: 1.3%;
+    bottom: 1.3%;
+    width: 32%;
+    height: 6%;
+    min-height: 32px;
+    font-size: clamp(9px, 0.85vw, 14px);
+    letter-spacing: clamp(0px, 0.1vw, 1.5px);
+}
+
+/* Изображение камеры не должно вылезать за рамку. */
+.cameraView_style {
+    overflow: hidden;
+    min-width: 0;
+    min-height: 0;
+}
+
+.cameraImage_style {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Поддержка старой разметки: скрываем прежнюю пару кнопок второй двери,
+   если она ещё присутствует в HTML. */
+#lightInRightDoor,
+#openRightDoor,
+.lightInRightDoor_style,
+.openRightDoor_style {
+    display: none !important;
+}
+
+@media (max-width: 700px) {
+    .cameraSidebar_style {
+        top: 12%;
+        right: 1%;
+        bottom: 10%;
+        width: 34%;
+    }
+
+    .cameraSidebar_style .cameras_style {
+        min-height: 0;
+        font-size: clamp(6px, 1vw, 9px);
+    }
+
+    .exitButton_style {
+        right: 1%;
+        bottom: 1%;
+        width: 34%;
+        min-height: 28px;
+        font-size: clamp(7px, 1vw, 10px);
+    }
+}
+
+
+/* =========================================================
+   NIGHTLINE — ИСПРАВЛЕНИЯ РАМКИ, ПАНЕЛЕЙ И СХЕМЫ
+   ========================================================= */
+
+/* Верхняя панель офиса: название | Свет | Дверь | ночь/время */
+.upperPart_style {
+    grid-template-columns: minmax(0, 1fr) auto auto minmax(0, 1fr);
+    grid-template-rows: 1fr 1fr;
+    column-gap: clamp(6px, 1vw, 16px);
+    padding: 0.4em 1.5%;
+}
+
+.gameName_style {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    justify-self: start;
+    align-self: center;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+#lightInLeftDoor {
+    grid-column: 2;
+    grid-row: 1 / 3;
+}
+
+#openLeftDoor {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    position: relative;
+}
+
+.nightNumber_style {
+    grid-column: 4;
+    grid-row: 1;
+    justify-self: end;
+    align-self: end;
+    white-space: nowrap;
+}
+
+.time_style {
+    grid-column: 4;
+    grid-row: 2;
+    justify-self: end;
+    align-self: start;
+    white-space: nowrap;
+}
+
+.door_style {
+    box-sizing: border-box;
+    width: clamp(64px, 7vw, 108px);
+    min-width: 0;
+    max-width: 100%;
+    min-height: clamp(32px, 3.2vw, 48px);
+    padding: 0.45em 0.55em;
+    font-size: clamp(10px, 1.05vw, 16px);
+    white-space: nowrap;
+}
+
+#openLeftDoor::after {
+    content: "";
+    position: absolute;
+    top: 12%;
+    right: calc(-1 * clamp(5px, 0.6vw, 10px));
+    width: 1px;
+    height: 76%;
+    background: rgba(137, 159, 183, 0.8);
+    pointer-events: none;
+}
+
+/* Камера: рамка остаётся видимой, даже когда файл изображения не загрузился. */
+.cameraView_style {
+    position: relative;
+    width: calc(100% - 34% - 1.2%);
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border: 2px solid #3e4856;
+    background: #050608;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 0, 0, 0.8);
+}
+
+.cameraImage_style {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border: 0;
+    color: transparent;
+    font-size: 0;
+}
+
+/* Схема здания: сцена сверху, две ветви, слепая зона и офис снизу. */
+.cameraSidebar_style {
+    top: 10.5%;
+    right: 1.3%;
+    bottom: 9%;
+    width: 32%;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #3e4856;
+}
+
+.cameraSidebar_style .cameras_style {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 27%;
+    height: 11.5%;
+    min-height: 0;
+    padding: 0.2em;
+    font-size: clamp(8px, 0.85vw, 13px);
+}
+
+#cam_scene { top: 2%; left: 28%; width: 44%; height: 13%; }
+#cam_01 { top: 24%; left: 2%; }
+#cam_02 { top: 24%; right: 2%; }
+#cam_03 { top: 41%; left: 2%; }
+#cam_04 { top: 41%; right: 2%; }
+#cam_05 { top: 58%; left: 2%; }
+#cam_06 { top: 58%; right: 2%; }
+#cam_07 { display: none !important; }
+
+.cameraSidebar_style::after {
+    content: "CAM_07";
+    position: absolute;
+    z-index: 2;
+    top: 58%;
+    left: 35%;
+    width: 30%;
+    height: 11.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid rgba(125, 148, 171, 0.65);
+    background: linear-gradient(180deg, rgba(21, 27, 33, 0.98), rgba(4, 6, 8, 0.99));
+    color: #aebdcd;
+    font-size: clamp(8px, 0.85vw, 13px);
+    text-align: center;
+}
+
+.cameraSidebar_style::before {
+    content: "ОФИС";
+    position: absolute;
+    z-index: 2;
+    left: 32%;
+    bottom: 2%;
+    width: 36%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid rgba(125, 148, 171, 0.65);
+    background: linear-gradient(180deg, rgba(21, 27, 33, 0.98), rgba(4, 6, 8, 0.99));
+    color: #aebdcd;
+    font-size: clamp(9px, 0.9vw, 14px);
+}
+
+/* Кнопка выхода — под картой, в пределах экрана. */
+.exitButton_style {
+    left: auto;
+    right: 1.3%;
+    bottom: 1.3%;
+    width: 32%;
+    height: 6%;
+    min-height: 32px;
+    max-width: 100%;
+    padding: 0.4em;
+    font-size: clamp(9px, 0.85vw, 14px);
+    letter-spacing: clamp(0px, 0.1vw, 1.5px);
+}
+
+/* Старые кнопки второй двери скрываем, если они остались в разметке. */
+#lightInRightDoor,
+#openRightDoor,
+.lightInRightDoor_style,
+.openRightDoor_style { display: none !important; }
+
+@media (max-width: 700px) {
+    .upperPart_style {
+        grid-template-columns: minmax(0, 1fr) auto auto minmax(0, 1fr);
+        column-gap: 4px;
+        padding: 0.3em 1.5%;
+    }
+    .gameName_style { font-size: clamp(10px, 2.3vw, 17px); letter-spacing: 1px; }
+    .door_style { width: clamp(46px, 12vw, 70px); min-height: 28px; padding: 0.35em 0.2em; font-size: clamp(8px, 1.6vw, 12px); letter-spacing: 0; }
+    .nightNumber_style, .time_style { font-size: clamp(8px, 1.5vw, 12px); letter-spacing: 0; }
+    .cameraSidebar_style { top: 12%; right: 1%; bottom: 10%; width: 36%; }
+    .cameraSidebar_style .cameras_style { min-height: 0; font-size: clamp(6px, 1vw, 9px); }
+    .cameraSidebar_style::after { font-size: clamp(6px, 1vw, 9px); }
+    .cameraSidebar_style::before { font-size: clamp(7px, 1.1vw, 10px); }
+    .cameraView_style { width: calc(100% - 38% - 1%); }
+    .exitButton_style { right: 1%; bottom: 1%; width: 36%; min-height: 28px; font-size: clamp(7px, 1vw, 10px); }
+}
+
+/* ==========================================
+   ЭКРАНЫ ПОБЕДЫ И ПОРАЖЕНИЯ
+   По умолчанию оба экрана скрыты. JavaScript
+   может показать их через element.style.display.
+   ========================================== */
+
+.defeat_style,
+.victory_style {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000;
+    display: none;
+    isolation: isolate;
+}
+
+/* Экран поражения должен закрывать игровой экран целиком. */
+.defeat_style {
+    z-index: 1000;
+}
+
+.defeatFoto_style {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 0;
+}
+
+/* Экран победы тоже полноэкранный и поверх игры. */
+.victory_style {
+    z-index: 1100;
+}
+
+.victoryVideo_style {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 0;
+    background: #000;
+}
+
+/* Мобильные браузеры: не даём видео или изображению
+   создавать собственные отступы и выходить за экран. */
+.defeatFoto_style,
+.victoryVideo_style {
+    box-sizing: border-box;
+}
+
+/* NIGHTLINE — ПЕРЕХОД К ПОБЕДЕ */
+
+.gameScreen_style {
+    position: relative;
+    opacity: 1;
+}
+
+.gameScreen_style.victoryFade_style {
+    animation: victoryFade 2s ease-in forwards;
+}
+
+@keyframes victoryFade {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }

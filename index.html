@@ -1,16 +1,142 @@
 <!DOCTYPE html>
 <html lang="ru">
-   <head>
-       <meta charset="utf-8">
-       <title></title>
-       <link href="style.css" rel="stylesheet">
-       <script src="index.js" defer></script>
-   </head>
-   
-   <body>
-       <section class="startMenu_style" id="startMenu">
-           <img class="startMenuImage_style" src="start.png" alt="Тёмный коридор с силуэтом аниматроника">
-           <button class="startMenuButton_style" id="startButton">НАЧАТЬ СМЕНУ</button>
-       </section>
-   </body>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link href="style.css" rel="stylesheet">
+        <script src="index.js" defer></script>
+    </head>
+
+    <body>
+        <section class="startMenu_style" id="startMenu">
+            <img
+                class="startMenuImage_style"
+                src="Фото/start.png"
+                alt="Тёмный коридор с силуэтом аниматроника"
+            >
+            <button class="startMenuButton_style" id="startButton">
+                НАЧАТЬ СМЕНУ
+            </button>
+        </section>
+
+        <section class="gameScreen_style" id="gameScreen">
+
+            <section class="officeRoom_style" id="officeRoom">
+                <div class="upperPart_style">
+                    <p class="gameName_style">NIGHTLINE</p>
+
+                    <button class="door_style" id="lightInDoor">
+                        Свет
+                    </button>
+
+                    <button class="door_style" id="openDoor">
+                        Дверь
+                    </button>
+
+                    <p class="nightNumber_style">NIGHT 1</p>
+                    <p class="time_style" id="timeInOffice">12 AM</p>
+                </div>
+
+                <img
+                    class="officeImage_style"
+                    id="officeImage"
+                    src="Офис/OpenDoor.png"
+                    alt="План офиса охранника Nightline"
+                >
+
+                <div class="lowerPart_style">
+                    <p class="batteryPower_style" id="batteryPower">
+                        Батарея: 100%
+                    </p>
+
+                    <button class="openCamera_style" id="openCamera">
+                        ОТКРЫТЬ СИСТЕМУ КАМЕР
+                    </button>
+                </div>
+            </section>
+
+            <section class="cameraSystem_style" id="cameraSystem">
+                <div class="cameraHeader_style">
+                    <p class="timeInCamera_style" id="timeInCamera">
+                        12 AM
+                    </p>
+
+                    <p class="nightNumberInCamera_style">NIGHT 1</p>
+
+                    <p
+                        class="batteryPowerInCamera_style"
+                        id="batteryPowerInCamera"
+                    >
+                        Батарея: 100%
+                    </p>
+
+                    <p class="cameraRecording_style">
+                        <span class="recordingDot_style"></span>
+                        REC
+                    </p>
+                </div>
+
+                <div class="cameraView_style">
+                    <img
+                        class="cameraImage_style"
+                        id="cameraImage"
+                        src=""
+                        alt="Первая камера наблюдения в здании, показывает сцену с аниматрониками"
+                    >
+                </div>
+
+                <div class="cameraSidebar_style">
+                    <button class="cameras_style" id="cam_scene">
+                        СЦЕНА
+                    </button>
+
+                    <button class="cameras_style" id="cam_01">
+                        CAM_01
+                    </button>
+
+                    <button class="cameras_style" id="cam_02">
+                        CAM_02
+                    </button>
+
+                    <button class="cameras_style" id="cam_03">
+                        CAM_03
+                    </button>
+
+                    <button class="cameras_style" id="cam_04">
+                        CAM_04
+                    </button>
+
+                    <button class="cameras_style" id="cam_05">
+                        CAM_05
+                    </button>
+
+                    <button class="cameras_style" id="cam_06">
+                        CAM_06
+                    </button>
+                </div>
+
+                <button class="exitButton_style" id="exitButton">
+                    ЗАКРЫТЬ СИСТЕМУ КАМЕР
+                </button>
+            </section>
+
+        </section>
+
+        <section class="defeat_style" id="defeat">
+            <img
+                class="defeatFoto_style"
+                src="Фото/freddyCostume.jpeg"
+            >
+        </section>
+
+        <section class="victory_style" id="victory">
+            <video
+                class="victoryVideo_style"
+                src="Видео/6AM.mp4"
+                autoplay
+            ></video>
+        </section>
+    </body>
 </html>
+
+<!-- ДЕНЬ РАЗРАБОТКИ: 4 -->
