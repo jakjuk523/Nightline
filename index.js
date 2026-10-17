@@ -590,15 +590,16 @@ function bonnieMoveCheck() {
     const directionRoll = Math.random();
 
     if (directionRoll < bonnieMoveAhead) {
+        stepSound.currentTime = 0;
+        stepSound.play();
 
         bonnieMove();
 
     } else {
-
+        stepSound.currentTime = 0;
+        stepSound.play();
         bonnieMoveBack();
     }
-    stepSound.currentTime = 0;
-    stepSound.play();
 }
 
 
