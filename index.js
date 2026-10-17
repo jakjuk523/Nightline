@@ -117,12 +117,12 @@ let bonnieRoom = bonnieRoute[bonnieRoutePosition];
 // Уровень ИИ для каждого игрового часа.
 
 const bonnieDifficultyByHour = {
-    12: 5,
-    1: 7,
-    2: 10,
-    3: 13,
-    4: 16,
-    5: 18
+    12: 3,
+    1: 6,
+    2: 8,
+    3: 10,
+    4: 12,
+    5: 14
 };
 
 let bonnieAI = bonnieDifficultyByHour[12];
